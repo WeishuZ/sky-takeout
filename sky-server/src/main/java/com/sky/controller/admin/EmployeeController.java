@@ -37,7 +37,6 @@ public class EmployeeController {
 
     /**
      * 登录
-     *
      * @param employeeLoginDTO
      * @return
      */
@@ -68,7 +67,6 @@ public class EmployeeController {
 
     /**
      * 退出
-     *
      * @return
      */
     @PostMapping("/logout")
@@ -110,7 +108,31 @@ public class EmployeeController {
         log.info("activate or deactivate the employee account: {}, {}",status, id);
         employeeService.startOrStop(status, id);
         return Result.success();
-
     }
 
+    /**
+     * Search the employee's information based on ID
+     * @param id
+     * @return
+     */
+    @GetMapping("/{id}")
+    @ApiOperation("Search the employee's information based on ID")
+    public Result<Employee> getById(@PathVariable Long id) {
+        log.info("getById: {}", id);
+        Employee employee = employeeService.getById(id);
+        return Result.success(employee);
+    }
+
+    /**
+     * update employee's information
+     * @param employeeDTO
+     * @return
+     */
+    @PutMapping
+    @ApiOperation("update employee's information")
+    public Result update(@RequestBody EmployeeDTO employeeDTO) {
+        log.info("update employee: {}", employeeDTO);
+        employeeService.update(employeeDTO);
+        return Result.success();
+    }
 }
